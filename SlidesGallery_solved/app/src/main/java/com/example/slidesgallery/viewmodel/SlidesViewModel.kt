@@ -1,5 +1,6 @@
 package com.example.slidesgallery.viewmodel
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.slidesgallery.model.Slide
@@ -7,7 +8,10 @@ import com.example.slidesgallery.model.SlidesDataProvider
 
 
 class SlidesViewModel : ViewModel(){
-    private val currentSlide = MutableLiveData<Slide>()
+    private val _currentSlide = MutableLiveData<Slide>()
+    val currentSlide : LiveData<Slide> = _currentSlide
+
+
     private val slides = SlidesDataProvider().getSlides()
     private var currentIndex = 0
 
@@ -15,9 +19,6 @@ class SlidesViewModel : ViewModel(){
         updateSlide(0)
     }
 
-    fun getCurrentSlide(): MutableLiveData<Slide> {
-        return currentSlide;
-    }
 
     fun moveSlide(direction: Direction){
         when(direction){
@@ -28,7 +29,6 @@ class SlidesViewModel : ViewModel(){
 
     private fun updateSlide(index : Int){
         currentIndex = (index + slides.size) % slides.size
-        currentSlide.value = slides[currentIndex]
+        _currentSlide.value = slides[currentIndex]
     }
-
 }
