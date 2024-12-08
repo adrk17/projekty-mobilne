@@ -30,7 +30,7 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
 
-        viewModel.getCurrentSlide().observe(this, { slide ->
+        viewModel.currentSlide.observe(this, { slide ->
             layoutBinding.imageView.setImageDrawable(
                 ResourcesCompat.getDrawable(resources, slide.photo, applicationContext.theme)
             )
